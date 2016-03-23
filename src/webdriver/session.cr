@@ -17,21 +17,18 @@ module Selenium
     # TODO: Storage (local, session)
     # TODO: Log
 
-    getter :driver, :id, :capabilities
+    getter driver : Webdriver
+    getter! id : String
+    getter! capabilities
 
     def initialize(@driver : Webdriver, @desired_capabilities, @required_capabilities)
     end
 
     def start
-      body = {} of String => Hash(String | Symbol, JSON::Type)
-
-      if caps = @desired_capabilities
-        body["desiredCapabilities"] = caps
-      end
-      if caps = @required_capabilities
-        body["requiredCapabilities"] = caps
-      end
-
+      body = {
+        "desiredCapabilities" => @desired_capabilities,
+        "requiredCapabilities" => @required_capabilities,
+      }
       response = driver.post("/session", body)
       @id = response["sessionId"] as String
       @capabilities = response["value"] as Hash
@@ -42,7 +39,7 @@ module Selenium
       delete
     end
 
-    def timeouts=(script = nil : Int, implicit = nil : Int, page_load = nil : Int)
+    def timeouts=(script : Int = nil, implicit : Int = nil, page_load : Int = nil)
       body = {} of Symbol => String | Nil
       body[:script] = script if script
       body[:implicit] = implicit if implicit
@@ -99,7 +96,7 @@ module Selenium
     #  post("/screenshot")
     #end
 
-    def find_element(by, selector, parent = nil : WebElement)
+    def find_element(by, selector, parent : WebElement = nil)
       url = parent ? "/element/#{ parent.id }/element" : "/element"
       value = post(url, {
         using: WebElement.locator_for(by),
@@ -108,7 +105,7 @@ module Selenium
       WebElement.new(self, value as Hash)
     end
 
-    def find_elements(by, selector, parent = nil : WebElement)
+    def find_elements(by, selector, parent : WebElement = nil)
       url = parent ? "/element/#{ parent.id }/elements" : "/elements"
       value = post(url, {
         using: WebElement.locator_for(by),
@@ -135,7 +132,7 @@ module Selenium
       @alert ||= Alert.new(self)
     end
 
-    def move_to(x, y, element = nil : WebElement)
+    def move_to(x, y, element : WebElement = nil)
       body = {} of String => Int | Float | WebElement | Nil
       body["xoffset"] = x
       body["yoffset"] = y
@@ -143,19 +140,19 @@ module Selenium
       post("/moveto", body)
     end
 
-    def click(button = MouseButton::LEFT : MouseButton)
+    def click(button : MouseButton = MouseButton::LEFT)
       post("/click", { button: button.value })
     end
 
-    def double_click(button = MouseButton::Left : MouseButton)
+    def double_click(button : MouseButton = MouseButton::Left)
       post("/doubleclick", { button: button.value })
     end
 
-    def button_down(button = MouseButton::Left : MouseButton)
+    def button_down(button : MouseButton = MouseButton::Left)
       post("/buttondown", { button: button.value })
     end
 
-    def button_up(button = MouseButton::Left : MouseButton)
+    def button_up(button : MouseButton = MouseButton::Left)
       post("/buttonup", { button: button.value })
     end
 

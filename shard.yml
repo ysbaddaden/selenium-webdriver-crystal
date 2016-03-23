@@ -1,5 +1,6 @@
 name: selenium-webdriver
 version: 0.1.0
+description: Selenium Webdriver client
 
 authors:
   - Julien Portalier <julien@portalier.com>

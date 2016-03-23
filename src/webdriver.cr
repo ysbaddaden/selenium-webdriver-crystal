@@ -24,7 +24,7 @@ module Selenium
 
       case response.status_code
       when 200
-        JSON.parse(response.body) as Hash
+        JSON.parse(response.body).raw as Hash
       else
         failure(response)
       end
@@ -40,7 +40,7 @@ module Selenium
 
       case response.status_code
       when 200
-        JSON.parse(response.body) as Hash
+        JSON.parse(response.body).raw as Hash
       else
         failure(response)
       end
@@ -54,7 +54,7 @@ module Selenium
 
     private def failure(response)
       if response.headers["Content-Type"].starts_with?("application/json")
-        body = JSON.parse(response.body) as Hash
+        body = JSON.parse(response.body).raw as Hash
         status = body["status"] as Int
         value = body["value"] as Hash
         raise Selenium.error_class(status).new(value["message"] as String)
