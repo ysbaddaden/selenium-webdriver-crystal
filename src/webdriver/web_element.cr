@@ -59,11 +59,11 @@ module Selenium
     #  Numpad 9  U+E023
     #}
 
-    getter :id
-    private getter :session
+    getter id
+    private getter session : Session
 
-    def initialize(@session, @item)
-      @id = @item["ELEMENT"]
+    def initialize(@session, item)
+      @id = item["ELEMENT"] as String
     end
 
     def find_element(by, selector)
@@ -127,7 +127,7 @@ module Selenium
     end
 
     def to_json(io)
-      @item.to_json(io)
+      { "ELEMENT" => id }.to_json(io)
     end
 
     protected def get(path)

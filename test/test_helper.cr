@@ -3,10 +3,6 @@ require "minitest/autorun"
 require "../src/selenium"
 
 class Minitest::Test
-  def driver
-    self.class.driver
-  end
-
   def self.driver
     @@driver ||= begin
       uri = URI.parse(ENV.fetch("SELENIUM_URL", "http://localhost:4444"))
@@ -14,19 +10,27 @@ class Minitest::Test
     end
   end
 
-  def session
-    self.class.session
-  end
-
   def self.session
     @@session ||= begin
-      session = driver.create_session({
-        browserName: ENV.fetch("BROWSER_NAME", "firefox"),
-        platform: "ANY",
-      })
-      session.url = "about:blank"
-      Minitest.after_run { session.stop }
-      session
+      capabilities = {
+        "browserName" => ENV.fetch("BROWSER_NAME", "firefox"),
+        "platform" => "ANY",
+      }
+      Selenium::Session.new(driver, capabilities, url: "about:blank")
     end
   end
+
+  def self.session?
+    !!@@session
+  end
+
+  def driver
+    Minitest::Test.driver
+  end
+
+  def session
+    Minitest::Test.session
+  end
 end
+
+Minitest.after_run { Minitest::Test.session.stop }

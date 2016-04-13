@@ -6,16 +6,12 @@ require "./webdriver/session"
 module Selenium
   class Webdriver
     # :nodoc:
-    CAPABILITIES = {} of String => String
+    CAPABILITIES = {} of Symbol => String
 
     getter :host, :port, :path, :ssl
 
     def initialize(@host = "localhost", @port = 4444, @path = "/wd/hub", @ssl = false)
       @client = HTTP::Client.new(host, port, ssl: ssl)
-    end
-
-    def create_session(desired_capabilities = CAPABILITIES, required_capabilities = CAPABILITIES)
-      Session.new(self, desired_capabilities, required_capabilities).start
     end
 
     def get(path)

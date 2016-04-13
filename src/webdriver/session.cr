@@ -19,20 +19,21 @@ module Selenium
 
     getter driver : Webdriver
     getter! id : String
-    getter! capabilities
+    getter! capabilities : Hash(String, JSON::Type)
 
-    def initialize(@driver : Webdriver, @desired_capabilities, @required_capabilities)
-    end
-
-    def start
+    def initialize(@driver, desired_capabilities = Webdriver::CAPABILITIES, required_capabilities = Webdriver::CAPABILITIES, url = "about:blank")
       body = {
-        "desiredCapabilities" => @desired_capabilities,
-        "requiredCapabilities" => @required_capabilities,
+        "desiredCapabilities" => desired_capabilities,
+        "requiredCapabilities" => required_capabilities,
       }
       response = driver.post("/session", body)
+
       @id = response["sessionId"] as String
       @capabilities = response["value"] as Hash
-      self
+
+      if url
+        self.url = url
+      end
     end
 
     def stop
