@@ -1,5 +1,5 @@
 name: selenium-webdriver
-version: 0.1.0
+version: 0.1.1
 description: Selenium Webdriver client
 
 authors:
@@ -8,6 +8,5 @@ authors:
 development_dependencies:
   minitest:
     github: ysbaddaden/minitest.cr
-    branch: fix-ivars
 
 license: Apache-2.0
