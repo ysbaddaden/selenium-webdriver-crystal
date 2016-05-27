@@ -17,19 +17,27 @@ You may now start a session, which will launch a browser, and start interacting
 with it:
 
 ```crystal
-driver = Selenium::Webdriver.new
+require "selenium"
 
 capabilities = {
   browserName: "firefox",
   platform: "ANY"
 }
-session = driver.create_session(capabilities)
+driver = Selenium::Webdriver.new
+session = Selenium::Session.new(driver, capabilities)
 
-session.url = "https://crystal-lang.org/api"
-pp session.url # => "https://crystal-lang.org/api"
+session.url = "http://crystal-lang.org/api"
+pp session.url # => "http://crystal-lang.org/api"
 
-input = session.find_element("input[type=search]")
+input = session.find_element(:css, "input[type=search]")
 input.send_keys("Client")
+sleep 1
+
+types_list = session.find_element(:id, "types-list")
+types = types_list.find_elements(:css, "li:not([class~='hide'])")
+pp count = types.size # => 5
+
+session.stop
 ```
 
 
