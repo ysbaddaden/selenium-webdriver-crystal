@@ -8,10 +8,10 @@ module Selenium
     # :nodoc:
     CAPABILITIES = {} of Symbol => String
 
-    getter :host, :port, :path, :ssl
+    getter :host, :port, :path, :tls
 
-    def initialize(@host = "localhost", @port = 4444, @path = "/wd/hub", @ssl = false)
-      @client = HTTP::Client.new(host, port, ssl: ssl)
+    def initialize(@host = "localhost", @port = 4444, @path = "/wd/hub", @tls = false)
+      @client = HTTP::Client.new(host, port, tls: tls)
     end
 
     def get(path)
