@@ -2,8 +2,8 @@ require "./test_helper"
 
 class SessionTest < Minitest::Test
   def test_navigation
-    session.url = "http://crystal-lang.org"
-    assert_equal "http://crystal-lang.org/", session.url
+    session.url = "https://crystal-lang.org"
+    assert_equal "https://crystal-lang.org/", session.url
 
     nav = session.find_element(:css, "nav .menu")
 
@@ -16,17 +16,17 @@ class SessionTest < Minitest::Test
     JAVASCRIPT
 
     nav.find_element(:css, "a[title='API']").click
-    assert_equal "http://crystal-lang.org/api/", session.url
+    assert_match "https://crystal-lang.org/api/", session.url
 
     session.back
-    assert_equal "http://crystal-lang.org/", session.url
+    assert_equal "https://crystal-lang.org/", session.url
 
     session.forward
-    assert_equal "http://crystal-lang.org/api/", session.url
+    assert_match "https://crystal-lang.org/api/", session.url
   end
 
   def test_input
-    session.url = "http://crystal-lang.org/api"
+    session.url = "https://crystal-lang.org/api"
     types_list = session.find_element(:id, "types-list")
 
     types = types_list.find_elements(:css, "li:not([class~='hide'])")
