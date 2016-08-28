@@ -1,5 +1,5 @@
-name: selenium-webdriver
-version: 0.1.1
+name: selenium
+version: 0.2.0
 description: Selenium Webdriver client
 
 authors:

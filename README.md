@@ -17,7 +17,7 @@ You may now start a session, which will launch a browser, and start interacting
 with it:
 
 ```crystal
-require "selenium"
+require "selenium/webdriver"
 
 capabilities = {
   browserName: "firefox",
