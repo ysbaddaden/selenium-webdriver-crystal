@@ -28,8 +28,8 @@ module Selenium
       }
       response = driver.post("/session", body)
 
-      @id = response["sessionId"] as String
-      @capabilities = response["value"] as Hash
+      @id = response["sessionId"].as(String)
+      @capabilities = response["value"].as(Hash)
 
       if url
         self.url = url
@@ -49,7 +49,7 @@ module Selenium
     end
 
     def url
-      get("/url") as String
+      get("/url").as(String)
     end
 
     def url=(url)
@@ -103,7 +103,7 @@ module Selenium
         using: WebElement.locator_for(by),
         value: selector
       })
-      WebElement.new(self, value as Hash)
+      WebElement.new(self, value.as(Hash))
     end
 
     def find_elements(by, selector, parent : WebElement = nil)
@@ -111,17 +111,17 @@ module Selenium
       value = post(url, {
         using: WebElement.locator_for(by),
         value: selector
-      }) as Array
-      value.map { |item| WebElement.new(self, item as Hash) }
+      }).as(Array)
+      value.map { |item| WebElement.new(self, item.as(Hash)) }
     end
 
     def active_element
       value = post("/element/active")
-      WebElement.new(self, value as Hash)
+      WebElement.new(self, value.as(Hash))
     end
 
     def orientation
-      get("/orientation") as String
+      get("/orientation").as(String)
     end
 
     def orientation=(value)
