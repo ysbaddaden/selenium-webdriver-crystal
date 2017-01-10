@@ -63,7 +63,7 @@ module Selenium
     private getter session : Session
 
     def initialize(@session, item)
-      @id = item["ELEMENT"] as String
+      @id = item["ELEMENT"].as(String)
     end
 
     def find_element(by, selector)
@@ -75,15 +75,15 @@ module Selenium
     end
 
     def text
-      get("/text") as String
+      get("/text").as(String)
     end
 
     def name
-      get("/name") as String
+      get("/name").as(String)
     end
 
     def attribute(name)
-      get("/attribute/#{ name }") as String
+      get("/attribute/#{ name }").as(String)
     end
 
     def click
@@ -103,27 +103,27 @@ module Selenium
     end
 
     def ==(other : WebElement)
-      get("/equals/#{ other.id }") as Bool
+      get("/equals/#{ other.id }").as(Bool)
     end
 
     def displayed?
-      get("/displayed") as Bool
+      get("/displayed").as(Bool)
     end
 
     def location
-      get("/location") as Hash
+      get("/location").as(Hash)
     end
 
     def location_in_view
-      get("/location_in_view") as Hash
+      get("/location_in_view").as(Hash)
     end
 
     def size
-      get("/size") as Hash
+      get("/size").as(Hash)
     end
 
     def css(property)
-      get("/css/#{ property }") as String
+      get("/css/#{ property }").as(String)
     end
 
     def to_json(io)
