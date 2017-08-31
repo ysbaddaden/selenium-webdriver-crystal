@@ -59,7 +59,7 @@ module Selenium
     #  Numpad 9  U+E023
     #}
 
-    getter id
+    getter id : String
     private getter session : Session
 
     def initialize(@session, item)

@@ -20,7 +20,7 @@ module Selenium
 
       case response.status_code
       when 200
-        JSON.parse(response.body).raw as Hash
+        JSON.parse(response.body).raw.as(Hash)
       else
         failure(response)
       end

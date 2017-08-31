@@ -2,6 +2,16 @@
 
 Selenium Webdriver bindings for the Crystal programming language.
 
+WARNING: this implements the now obsolete
+[JsonWireProtocol](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol)
+the [W3C Webdriver spec](https://w3c.github.io/webdriver/webdriver-spec.html).
+Your selenium and browser mileages may not be supported until the new protocol
+is implemented.
+
+Latest known working combination is Selenium 2.48.2 and Firefox 34. A
+combination known to NOT WORK is Selenium 3.5.3, Firefox 55 and the now required
+Geckodriver 0.18.0.
+
 
 ## Usage
 

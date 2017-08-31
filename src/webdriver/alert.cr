@@ -1,6 +1,6 @@
 module Selenium
   class Alert
-    private getter :session
+    private getter session : Session
 
     def initialize(@session)
     end

@@ -40,11 +40,11 @@ module Selenium
       delete
     end
 
-    def timeouts=(script : Int = nil, implicit : Int = nil, page_load : Int = nil)
-      body = {} of Symbol => String | Nil
-      body[:script] = script if script
-      body[:implicit] = implicit if implicit
-      body[:page_load] = page_load if page_load
+    def timeouts(script : Int? = nil, implicit : Int? = nil, page_load : Int? = nil)
+      body = {} of Symbol => Int32?
+      body[:script] = script.to_i if script
+      body[:implicit] = implicit.to_i if implicit
+      body[:page_load] = page_load.to_i if page_load
       post("/timeouts", body)
     end
 
@@ -97,7 +97,7 @@ module Selenium
     #  post("/screenshot")
     #end
 
-    def find_element(by, selector, parent : WebElement = nil)
+    def find_element(by, selector, parent : WebElement? = nil)
       url = parent ? "/element/#{ parent.id }/element" : "/element"
       value = post(url, {
         using: WebElement.locator_for(by),
@@ -106,7 +106,7 @@ module Selenium
       WebElement.new(self, value.as(Hash))
     end
 
-    def find_elements(by, selector, parent : WebElement = nil)
+    def find_elements(by, selector, parent : WebElement? = nil)
       url = parent ? "/element/#{ parent.id }/elements" : "/elements"
       value = post(url, {
         using: WebElement.locator_for(by),
