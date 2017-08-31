@@ -16,7 +16,19 @@ module Selenium
 
     def get(path)
       headers = HTTP::Headers{ "Accept" => "application/json" }
+
+      {% if flag?(:DEBUG) %}
+      puts "REQUEST: GET #{path}"
+      p headers
+      {% end %}
+
       response = @client.get("#{@path}#{path}", headers)
+
+      {% if flag?(:DEBUG) %}
+      puts "RESPONSE: #{response.status_code}"
+      p JSON.parse(response.body).raw
+      puts
+      {% end %}
 
       case response.status_code
       when 200
@@ -27,12 +39,23 @@ module Selenium
     end
 
     def post(path, body = nil)
+      {% if flag?(:DEBUG) %}
+      puts "REQUEST: POST #{path}"
+      p body
+      {% end %}
+
       if body
         headers = HTTP::Headers{ "Content-Type" => "application/json; charset=UTF-8" }
         response = @client.post("#{@path}#{path}", headers, body.to_json)
       else
         response = @client.post("#{@path}#{path}")
       end
+
+      {% if flag?(:DEBUG) %}
+      puts "RESPONSE: #{response.status_code}"
+      p JSON.parse(response.body).raw
+      puts
+      {% end %}
 
       case response.status_code
       when 200
@@ -43,7 +66,17 @@ module Selenium
     end
 
     def delete(path)
+      {% if flag?(:DEBUG) %}
+      puts "REQUEST: DELETE #{path}"
+      {% end %}
+
       response = @client.delete("#{@path}#{path}")
+
+      {% if flag?(:DEBUG) %}
+      puts "RESPONSE: #{response.status_code}"
+      p JSON.parse(response.body).raw
+      {% end %}
+
       raise Error.new(response.body) unless response.status_code == 200
       true
     end

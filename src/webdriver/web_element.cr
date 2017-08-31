@@ -63,7 +63,14 @@ module Selenium
     private getter session : Session
 
     def initialize(@session, item)
-      @id = item["ELEMENT"].as(String)
+      if id = item["ELEMENT"]?
+        # JsonWireProtocol (obsolete)
+        @id = id.as(String)
+      else
+        # W3C Webdriver
+        identifier = item.keys.find(&.starts_with?("element-"))
+        @id = item[identifier].as(String)
+      end
     end
 
     def find_element(by, selector)
