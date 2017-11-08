@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v0.3.0
+
+Changes:
+- Compatibility with W3C Webdriver (Selenium 3.x), see #6
+
+Fixes:
+- Compatibility with recent Crystal releases
+
 ## v0.2.0
 
 Breaking changes:
