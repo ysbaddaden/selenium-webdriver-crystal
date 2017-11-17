@@ -64,8 +64,8 @@ module Selenium
 
     def initialize(@session, item)
       if id = item["ELEMENT"]?
-        # JsonWireProtocol (obsolete)
-        @id = id.as(String)
+          # JsonWireProtocol (obsolete)
+          @id = id.as(String)
       else
         # W3C Webdriver
         identifier = item.keys.find(&.starts_with?("element-"))
@@ -107,6 +107,10 @@ module Selenium
 
     def send_keys(sequence : Array)
       post("/value", { value: sequence })
+    end
+
+    def clear
+      post("/clear")
     end
 
     def ==(other : WebElement)
