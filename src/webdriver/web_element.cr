@@ -109,6 +109,10 @@ module Selenium
       post("/value", { value: sequence })
     end
 
+    def clear
+      post("/clear")
+    end
+
     def ==(other : WebElement)
       get("/equals/#{ other.id }").as(Bool)
     end
