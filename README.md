@@ -2,15 +2,14 @@
 
 Selenium Webdriver bindings for the Crystal programming language.
 
-WARNING: this implements the now obsolete
-[JsonWireProtocol](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol)
-the [W3C Webdriver spec](https://w3c.github.io/webdriver/webdriver-spec.html).
-Your selenium and browser mileages may not be supported until the new protocol
-is implemented.
+WARNING: this shard initialy implemented the now obsolete
+[JsonWireProtocol](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol),
+but should be compatible with the
+[W3C Webdriver](https://w3c.github.io/webdriver/webdriver-spec.html) spec.
 
-Latest known working combination is Selenium 2.48.2 and Firefox 34. A
-combination known to NOT WORK is Selenium 3.5.3, Firefox 55 and the now required
-Geckodriver 0.18.0.
+Known working combinations are Selenium 2.48.2 and Firefox 34 (JSONWireProtocol),
+as well as Selenium 3.5.3, Firefox 55 and the now required Geckodriver 0.18.0
+(W3C Webdriver).
 
 
 ## Usage
@@ -53,7 +52,8 @@ session.stop
 
 ## Reference
 
-Webdriver JSON API: <https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol>
+- [JSON Wire Protocol](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol)
+- [W3C Webdriver](https://w3c.github.io/webdriver/webdriver-spec.html)
 
 
 ## License
