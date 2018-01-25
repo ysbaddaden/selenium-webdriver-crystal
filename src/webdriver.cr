@@ -1,5 +1,6 @@
 require "http/client"
 require "json"
+require "base64"
 require "./webdriver/errors"
 require "./webdriver/session"
 

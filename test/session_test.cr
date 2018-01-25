@@ -30,6 +30,10 @@ class SessionTest < Minitest::Test
 
     session.forward
     assert_match "https://crystal-lang.org/blog/", session.url
+
+    assert do
+      session.screenshot
+    end
   end
 
   def test_input
@@ -40,7 +44,9 @@ class SessionTest < Minitest::Test
     count = types.size
 
     input = session.find_element(:css, "input[type='search']")
-    input.send_keys("Foo bar.., ups wrong...")
+    input.send_keys("Cleint.., ups wrong...")
+    sleep 1
+
     input.clear
     input.send_keys("Client")
     sleep 1
