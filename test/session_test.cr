@@ -44,10 +44,13 @@ class SessionTest < Minitest::Test
     count = types.size
 
     input = session.find_element(:css, "input[type='search']")
+    
     input.send_keys("Cleint.., ups wrong...")
     sleep 1
 
     input.clear
+    sleep 500.milliseconds
+    
     input.send_keys("Client")
     sleep 1
 
