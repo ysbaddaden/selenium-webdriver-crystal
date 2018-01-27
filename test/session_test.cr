@@ -32,7 +32,7 @@ class SessionTest < Minitest::Test
     assert_match "https://crystal-lang.org/blog/", session.url
 
     assert do
-      session.screenshot
+      session.save_screenshot
     end
   end
 
