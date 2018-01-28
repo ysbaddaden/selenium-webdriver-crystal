@@ -92,10 +92,15 @@ module Selenium
       post("/frame/parent")
     end
 
-    #def screenshot
-    #  # TODO: decode Base64
-    #  post("/screenshot")
-    #end
+    def screenshot
+      data = get("/screenshot").as(String)
+      Base64.decode(data)
+    end
+
+    def save_screenshot(path)
+      data = get("/screenshot").as(String)
+      File.open(path, "w") { |file| Base64.decode(data, file) }
+    end
 
     def find_element(by, selector, parent : WebElement? = nil)
       url = parent ? "/element/#{ parent.id }/element" : "/element"
