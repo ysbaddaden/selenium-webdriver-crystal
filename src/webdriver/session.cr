@@ -92,7 +92,7 @@ module Selenium
       post("/frame/parent")
     end
 
-    def set_cookie(value, domain, name, path = "/", http_only = false : Bool, secure = false : Bool)
+    def set_cookie(value, domain, name, path = "/", http_only : Bool = false, secure : Bool = false)
       post("/cookie", {
         cookie: {
           path:     path,
@@ -103,6 +103,10 @@ module Selenium
           value:    value,
         },
       })
+    end
+
+    def get_cookie
+      get("/cookie").as(String)
     end
 
     def screenshot
