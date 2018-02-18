@@ -36,6 +36,13 @@ class SessionTest < Minitest::Test
     end
   end
 
+  def test_cookies
+    session.url = "https://google.com/"
+    session.set_cookie("1", "crystal-lang.org", "test_cookie")
+    sleep 1
+    assert_includes session.get_cookie "test_cookie"
+  end
+
   def test_input
     session.url = "https://crystal-lang.org/api"
     types_list = session.find_element(:id, "types-list")
@@ -44,13 +51,13 @@ class SessionTest < Minitest::Test
     count = types.size
 
     input = session.find_element(:css, "input[type='search']")
-    
+
     input.send_keys("Cleint.., ups wrong...")
     sleep 1
 
     input.clear
     sleep 500.milliseconds
-    
+
     input.send_keys("Client")
     sleep 1
 
