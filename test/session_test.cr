@@ -1,4 +1,5 @@
 require "./test_helper"
+require "uuid"
 
 class SessionTest < Minitest::Test
   def test_navigation
@@ -32,7 +33,7 @@ class SessionTest < Minitest::Test
     assert_match "https://crystal-lang.org/blog/", session.url
 
     assert do
-      session.save_screenshot
+      session.save_screenshot("webdriver-screenshot.png")
     end
   end
 
@@ -44,17 +45,46 @@ class SessionTest < Minitest::Test
     count = types.size
 
     input = session.find_element(:css, "input[type='search']")
-    
+
     input.send_keys("Cleint.., ups wrong...")
     sleep 1
 
     input.clear
     sleep 500.milliseconds
-    
+
     input.send_keys("Client")
     sleep 1
 
     types = types_list.find_elements(:css, "li:not([class~='hide'])")
     refute_equal count, types.size
+  end
+
+  def test_cookies
+    session.url = "https://crystal-lang.org/api"
+    assert_empty session.cookies.to_a
+
+    session_id = UUID.random.to_s
+    session.cookies.set("selenium_session_id", session_id)
+    session.cookies.set("selenium_username", "julien", domain: "crystal-lang.org")
+    assert_raises(Selenium::InvalidCookieDomain) do
+      session.cookies.set("selenium_username", "mathias", domain: "www.crystal-lang.org")
+    end
+
+    cookies = session.cookies.to_a
+    assert_equal 2, cookies.size
+
+    values = {} of String => String
+    session.cookies.each { |cookie| values[cookie.name] = cookie.value }
+    assert_equal session_id, values["selenium_session_id"]
+    assert_equal "julien", values["selenium_username"]
+
+    assert_equal "julien", session.cookies.get("selenium_username").value
+
+    session.cookies.delete("selenium_username")
+    assert_raises(Selenium::Error) { session.cookies.get("selenium_username") }
+    assert_equal session_id, session.cookies.get("selenium_session_id").value
+
+    session.cookies.clear
+    assert_empty session.cookies.to_a
   end
 end

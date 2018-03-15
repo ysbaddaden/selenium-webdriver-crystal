@@ -1,5 +1,6 @@
 require "./web_element"
 require "./alert"
+require "./session/cookies"
 
 module Selenium
   class Session
@@ -46,6 +47,10 @@ module Selenium
       body[:implicit] = implicit.to_i if implicit
       body[:page_load] = page_load.to_i if page_load
       post("/timeouts", body)
+    end
+
+    def cookies
+      Cookies.new(self)
     end
 
     def url
@@ -163,13 +168,13 @@ module Selenium
     end
 
     protected def get(path = "")
-      body = driver.get("/session/#{ id }#{ path }")
-      body["value"]
+      response = driver.get("/session/#{ id }#{ path }")
+      response["value"]
     end
 
     protected def post(path, body = nil)
-      body = driver.post("/session/#{ id }#{ path }", body)
-      body["value"]
+      response = driver.post("/session/#{ id }#{ path }", body)
+      response["value"]
     end
 
     protected def delete(path = "")
