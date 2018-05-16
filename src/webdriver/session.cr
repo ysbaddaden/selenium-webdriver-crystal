@@ -78,7 +78,7 @@ module Selenium
     end
 
     def source
-      post("/source")
+      get("/source")
     end
 
     def execute(script, *args)
