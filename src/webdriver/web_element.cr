@@ -1,24 +1,24 @@
 module Selenium
   class WebElement
     LOCATORS = {
-      id: "id",
-      name: "name",
-      tag_name: "tag name",
-      class_name: "class name",
-      css: "css selector",
-      link_text: "link text",
+      id:                "id",
+      name:              "name",
+      tag_name:          "tag name",
+      class_name:        "class name",
+      css:               "css selector",
+      link_text:         "link text",
       partial_link_test: "partial link text",
-      xpath: "xpath",
+      xpath:             "xpath",
     }
 
     def self.locator_for(by)
       locator = LOCATORS[by]
-      raise ArgumentError.new("Unsupported locator strategy: #{ by.inspect }") unless locator
+      raise ArgumentError.new("Unsupported locator strategy: #{by.inspect}") unless locator
       locator
     end
 
     # TODO: special keys
-    #KEYS = {
+    # KEYS = {
     #  NULL  U+E000
     #  Cancel  U+E001
     #  Help  U+E002
@@ -57,7 +57,7 @@ module Selenium
     #  Numpad 7  U+E021
     #  Numpad 8  U+E022
     #  Numpad 9  U+E023
-    #}
+    # }
 
     getter id : String
     private getter session : Session
@@ -90,7 +90,7 @@ module Selenium
     end
 
     def attribute(name)
-      get("/attribute/#{ name }").as(String)
+      get("/attribute/#{name}").as(String)
     end
 
     def click
@@ -106,7 +106,7 @@ module Selenium
     end
 
     def send_keys(sequence : Array)
-      post("/value", { value: sequence })
+      post("/value", {value: sequence})
     end
 
     def clear
@@ -114,7 +114,7 @@ module Selenium
     end
 
     def ==(other : WebElement)
-      get("/equals/#{ other.id }").as(Bool)
+      get("/equals/#{other.id}").as(Bool)
     end
 
     def displayed?
@@ -134,19 +134,19 @@ module Selenium
     end
 
     def css(property)
-      get("/css/#{ property }").as(String)
+      get("/css/#{property}").as(String)
     end
 
     def to_json(io)
-      { "ELEMENT" => id }.to_json(io)
+      {"ELEMENT" => id}.to_json(io)
     end
 
     protected def get(path)
-      session.get("/element/#{ id }#{ path }")
+      session.get("/element/#{id}#{path}")
     end
 
     protected def post(path, body = nil)
-      session.post("/element/#{ id }#{ path }", body)
+      session.post("/element/#{id}#{path}", body)
     end
   end
 end

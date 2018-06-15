@@ -16,7 +16,7 @@ module Selenium
     end
 
     def get(path)
-      headers = HTTP::Headers{ "Accept" => "application/json" }
+      headers = HTTP::Headers{"Accept" => "application/json"}
 
       {% if flag?(:DEBUG) %}
       puts "REQUEST: GET #{path}"
@@ -46,7 +46,7 @@ module Selenium
       {% end %}
 
       if body
-        headers = HTTP::Headers{ "Content-Type" => "application/json; charset=UTF-8" }
+        headers = HTTP::Headers{"Content-Type" => "application/json; charset=UTF-8"}
         response = @client.post("#{@path}#{path}", headers, body.to_json)
       else
         response = @client.post("#{@path}#{path}")

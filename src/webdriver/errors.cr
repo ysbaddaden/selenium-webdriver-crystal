@@ -1,37 +1,61 @@
 module Selenium
   class Error < Exception; end
+
   class NoSuchDriver < Error; end
+
   class NoSuchElement < Error; end
+
   class NoSuchFrame < Error; end
+
   class UnknownCommand < Error; end
+
   class StaleElementReference < Error; end
+
   class ElementNotVisible < Error; end
+
   class InvalidElementState < Error; end
+
   class UnknownError < Error; end
+
   class ElementIsNotSelectable < Error; end
+
   class JavaScriptError < Error; end
+
   class XPathLookupError < Error; end
+
   class Timeout < Error; end
+
   class NoSuchWindow < Error; end
+
   class InvalidCookieDomain < Error; end
+
   class UnableToSetCookie < Error; end
+
   class UnexpectedAlertOpen < Error; end
+
   class NoAlertOpenError < Error; end
+
   class ScriptTimeout < Error; end
+
   class InvalidElementCoordinates < Error; end
+
   class IMENotAvailable < Error; end
+
   class IMEEngineActivationFailed < Error; end
+
   class InvalidSelector < Error; end
+
   class SessionNotCreatedException < Error; end
+
   class MoveTargetOutOfBounds < Error; end
 
   # :nodoc:
   protected def self.error_class(status)
     case status
-    when 6 then NoSuchDriver
-    when 7 then NoSuchElement
-    when 8 then NoSuchFrame
-    when 9 then UnknownCommand
+    when  6 then NoSuchDriver
+    when  7 then NoSuchElement
+    when  8 then NoSuchFrame
+    when  9 then UnknownCommand
     when 10 then StaleElementReference
     when 11 then ElementNotVisible
     when 12 then InvalidElementState

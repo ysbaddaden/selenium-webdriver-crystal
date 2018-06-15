@@ -24,7 +24,7 @@ module Selenium
 
     def initialize(@driver, desired_capabilities = Webdriver::CAPABILITIES, required_capabilities = Webdriver::CAPABILITIES, url = "about:blank")
       body = {
-        "desiredCapabilities" => desired_capabilities,
+        "desiredCapabilities"  => desired_capabilities,
         "requiredCapabilities" => required_capabilities,
       }
       response = driver.post("/session", body)
@@ -58,7 +58,7 @@ module Selenium
     end
 
     def url=(url)
-      post("/url", { url: url })
+      post("/url", {url: url})
     end
 
     def forward
@@ -82,15 +82,15 @@ module Selenium
     end
 
     def execute(script, *args)
-      post("/execute", { script: script, args: args })
+      post("/execute", {script: script, args: args})
     end
 
     def execute_async(script, *args)
-      post("/execute", { script: script, args: args })
+      post("/execute", {script: script, args: args})
     end
 
     def frame(identifier)
-      post("/frame", { id: identifier })
+      post("/frame", {id: identifier})
     end
 
     def parent_frame
@@ -108,19 +108,19 @@ module Selenium
     end
 
     def find_element(by, selector, parent : WebElement? = nil)
-      url = parent ? "/element/#{ parent.id }/element" : "/element"
+      url = parent ? "/element/#{parent.id}/element" : "/element"
       value = post(url, {
         using: WebElement.locator_for(by),
-        value: selector
+        value: selector,
       })
       WebElement.new(self, value.as(Hash))
     end
 
     def find_elements(by, selector, parent : WebElement? = nil)
-      url = parent ? "/element/#{ parent.id }/elements" : "/elements"
+      url = parent ? "/element/#{parent.id}/elements" : "/elements"
       value = post(url, {
         using: WebElement.locator_for(by),
-        value: selector
+        value: selector,
       }).as(Array)
       value.map { |item| WebElement.new(self, item.as(Hash)) }
     end
@@ -136,7 +136,7 @@ module Selenium
 
     def orientation=(value)
       raise ArgumentError.new unless %i(portrait landscape).includes?(value)
-      post("/orientation", { orientation: value.to_s.upcase })
+      post("/orientation", {orientation: value.to_s.upcase})
     end
 
     def alert
@@ -152,33 +152,33 @@ module Selenium
     end
 
     def click(button : MouseButton = MouseButton::LEFT)
-      post("/click", { button: button.value })
+      post("/click", {button: button.value})
     end
 
     def double_click(button : MouseButton = MouseButton::Left)
-      post("/doubleclick", { button: button.value })
+      post("/doubleclick", {button: button.value})
     end
 
     def button_down(button : MouseButton = MouseButton::Left)
-      post("/buttondown", { button: button.value })
+      post("/buttondown", {button: button.value})
     end
 
     def button_up(button : MouseButton = MouseButton::Left)
-      post("/buttonup", { button: button.value })
+      post("/buttonup", {button: button.value})
     end
 
     protected def get(path = "")
-      response = driver.get("/session/#{ id }#{ path }")
+      response = driver.get("/session/#{id}#{path}")
       response["value"]
     end
 
     protected def post(path, body = nil)
-      response = driver.post("/session/#{ id }#{ path }", body)
+      response = driver.post("/session/#{id}#{path}", body)
       response["value"]
     end
 
     protected def delete(path = "")
-      driver.delete("/session/#{ id }#{ path }")
+      driver.delete("/session/#{id}#{path}")
     end
   end
 end
