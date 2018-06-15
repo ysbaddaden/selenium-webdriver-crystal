@@ -20,7 +20,7 @@ module Selenium
 
     getter driver : Webdriver
     getter! id : String
-    getter! capabilities : Hash(String, JSON::Type)
+    getter! capabilities : Hash(String, JSON::Any)
 
     def initialize(@driver, desired_capabilities = Webdriver::CAPABILITIES, required_capabilities = Webdriver::CAPABILITIES, url = "about:blank")
       body = {
@@ -29,8 +29,8 @@ module Selenium
       }
       response = driver.post("/session", body)
 
-      @id = response["sessionId"].as(String)
-      @capabilities = response["value"].as(Hash)
+      @id = response["sessionId"].to_s
+      @capabilities = response["value"].as_h
 
       if url
         self.url = url
@@ -54,7 +54,7 @@ module Selenium
     end
 
     def url
-      get("/url").as(String)
+      get("/url").as_s
     end
 
     def url=(url)
@@ -103,7 +103,7 @@ module Selenium
     end
 
     def save_screenshot(path)
-      data = get("/screenshot").as(String)
+      data = get("/screenshot").as_s
       File.open(path, "w") { |file| Base64.decode(data, file) }
     end
 
@@ -113,7 +113,7 @@ module Selenium
         using: WebElement.locator_for(by),
         value: selector,
       })
-      WebElement.new(self, value.as(Hash))
+      WebElement.new(self, value.as_h)
     end
 
     def find_elements(by, selector, parent : WebElement? = nil)
@@ -121,13 +121,13 @@ module Selenium
       value = post(url, {
         using: WebElement.locator_for(by),
         value: selector,
-      }).as(Array)
-      value.map { |item| WebElement.new(self, item.as(Hash)) }
+      }).as_a
+      value.map { |item| WebElement.new(self, item.as_h) }
     end
 
     def active_element
       value = post("/element/active")
-      WebElement.new(self, value.as(Hash))
+      WebElement.new(self, value.as_h)
     end
 
     def orientation
