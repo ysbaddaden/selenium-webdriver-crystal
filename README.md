@@ -11,7 +11,6 @@ Known working combinations are Selenium 2.48.2 and Firefox 34 (JSONWireProtocol)
 as well as Selenium 3.5.3, Firefox 55 and the now required Geckodriver 0.18.0
 (W3C Webdriver).
 
-
 ## Usage
 
 Only the Remote driver is available, so you need to download the release
@@ -49,17 +48,25 @@ pp count = types.size # => 5
 session.stop
 ```
 
+## Testing Selenium Webdriver Crystal
+
+- Install Chromedriver
+- Start Chromedriver
+
+```
+chromedriver --port=4444 --url-base=/wd/hub
+```
+
+- run `crystal test/session_test.cr`
 
 ## Reference
 
 - [JSON Wire Protocol](https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol)
 - [W3C Webdriver](https://w3c.github.io/webdriver/webdriver-spec.html)
 
-
 ## License
 
 Distributed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0)
-
 
 ## Author
 
