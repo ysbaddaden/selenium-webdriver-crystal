@@ -20,7 +20,7 @@ module Selenium
 
     getter driver : Webdriver
     getter! id : String
-    getter! capabilities : Hash(String, JSON::Type)
+    getter! capabilities : Hash(String, JSON::Any)
 
     def initialize(@driver, desired_capabilities = Webdriver::CAPABILITIES, required_capabilities = Webdriver::CAPABILITIES, url = "about:blank")
       body = {
