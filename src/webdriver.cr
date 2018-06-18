@@ -86,8 +86,7 @@ module Selenium
       if response.headers["Content-Type"].starts_with?("application/json")
         body = JSON.parse(response.body)
         status = body["status"].as_i
-        value = body["value"]
-        raise Selenium.error_class(status).new(body["value"]["message"].to_s)
+        raise Selenium.error_class(status).new(body["value"]["message"].as_s)
       end
       raise Error.new(response.body)
     end

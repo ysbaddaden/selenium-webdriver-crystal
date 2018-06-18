@@ -29,7 +29,7 @@ module Selenium
       }
       response = driver.post("/session", body)
 
-      @id = response["sessionId"].to_s
+      @id = response["sessionId"].as_s
       @capabilities = response["value"].as_h
 
       if url
