@@ -10,7 +10,7 @@ module Selenium
     end
 
     def send_keys(sequence : String)
-      session.post("/alert_text", { value: sequence })
+      session.post("/alert_text", {value: sequence})
     end
 
     def accept

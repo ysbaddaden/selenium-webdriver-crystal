@@ -16,7 +16,7 @@ module Selenium
     end
 
     def get(path)
-      headers = HTTP::Headers{ "Accept" => "application/json" }
+      headers = HTTP::Headers{"Accept" => "application/json"}
 
       {% if flag?(:DEBUG) %}
       puts "REQUEST: GET #{path}"
@@ -27,13 +27,13 @@ module Selenium
 
       {% if flag?(:DEBUG) %}
       puts "RESPONSE: #{response.status_code}"
-      p JSON.parse(response.body).raw
+      p JSON.parse(response.body)
       puts
       {% end %}
 
       case response.status_code
       when 200
-        JSON.parse(response.body).raw.as(Hash)
+        JSON.parse(response.body)
       else
         failure(response)
       end
@@ -46,7 +46,7 @@ module Selenium
       {% end %}
 
       if body
-        headers = HTTP::Headers{ "Content-Type" => "application/json; charset=UTF-8" }
+        headers = HTTP::Headers{"Content-Type" => "application/json; charset=UTF-8"}
         response = @client.post("#{@path}#{path}", headers, body.to_json)
       else
         response = @client.post("#{@path}#{path}")
@@ -54,13 +54,13 @@ module Selenium
 
       {% if flag?(:DEBUG) %}
       puts "RESPONSE: #{response.status_code}"
-      p JSON.parse(response.body).raw
+      p JSON.parse(response.body)
       puts
       {% end %}
 
       case response.status_code
       when 200
-        JSON.parse(response.body).raw.as(Hash)
+        JSON.parse(response.body)
       else
         failure(response)
       end
@@ -75,7 +75,7 @@ module Selenium
 
       {% if flag?(:DEBUG) %}
       puts "RESPONSE: #{response.status_code}"
-      p JSON.parse(response.body).raw
+      p JSON.parse(response.body)
       {% end %}
 
       raise Error.new(response.body) unless response.status_code == 200
@@ -84,10 +84,9 @@ module Selenium
 
     private def failure(response)
       if response.headers["Content-Type"].starts_with?("application/json")
-        body = JSON.parse(response.body).raw.as(Hash)
-        status = body["status"].as(Int)
-        value = body["value"].as(Hash)
-        raise Selenium.error_class(status).new(value["message"].as(String))
+        body = JSON.parse(response.body)
+        status = body["status"].as_i
+        raise Selenium.error_class(status).new(body["value"]["message"].as_s)
       end
       raise Error.new(response.body)
     end
