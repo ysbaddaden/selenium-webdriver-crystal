@@ -31,12 +31,7 @@ module Selenium
       puts
       {% end %}
 
-      case response.status_code
-      when 200
-        JSON.parse(response.body)
-      else
-        failure(response)
-      end
+      handle_response(response)
     end
 
     def post(path, body = nil)
@@ -58,12 +53,7 @@ module Selenium
       puts
       {% end %}
 
-      case response.status_code
-      when 200
-        JSON.parse(response.body)
-      else
-        failure(response)
-      end
+      handle_response(response)
     end
 
     def delete(path)
@@ -82,13 +72,19 @@ module Selenium
       true
     end
 
-    private def failure(response)
+    private def handle_response(response)
       if response.headers["Content-Type"].starts_with?("application/json")
         body = JSON.parse(response.body)
         status = body["status"].as_i
-        raise Selenium.error_class(status).new(body["value"]["message"].as_s)
+
+        if status.zero?
+          body
+        else
+          raise Selenium.error_class(status).new(body["value"]["message"].as_s)
+        end
+      else
+        raise Error.new(response.body)
       end
-      raise Error.new(response.body)
     end
   end
 end
