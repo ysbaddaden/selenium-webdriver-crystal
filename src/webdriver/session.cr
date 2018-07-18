@@ -1,6 +1,7 @@
 require "./web_element"
 require "./alert"
 require "./session/cookies"
+require "./session/window"
 
 module Selenium
   class Session
@@ -47,6 +48,10 @@ module Selenium
       body[:implicit] = implicit.to_i if implicit
       body[:page_load] = page_load.to_i if page_load
       post("/timeouts", body)
+    end
+
+    def window
+      Window.new(self)
     end
 
     def cookies
