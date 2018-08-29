@@ -6,7 +6,7 @@ module Selenium
     end
 
     def text
-      session.get("/alert_text").as(String)
+      session.get("/alert_text").as_s
     end
 
     def send_keys(sequence : String)

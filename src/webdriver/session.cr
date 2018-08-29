@@ -103,7 +103,7 @@ module Selenium
     end
 
     def screenshot
-      data = get("/screenshot").as(String)
+      data = get("/screenshot").as_s
       Base64.decode(data)
     end
 
@@ -136,7 +136,7 @@ module Selenium
     end
 
     def orientation
-      get("/orientation").as(String)
+      get("/orientation").as_s
     end
 
     def orientation=(value)
