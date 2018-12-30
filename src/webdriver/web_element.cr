@@ -121,6 +121,14 @@ module Selenium
       get("/displayed").as_bool
     end
 
+    def enabled?
+      get("/enabled").as_bool
+    end
+
+    def selected?
+      get("/selected").as_bool
+    end
+
     def location
       get("/location")
     end
