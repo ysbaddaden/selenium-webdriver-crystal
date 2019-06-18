@@ -42,7 +42,7 @@ input = session.find_element(:css, "input[type=search]")
 input.send_keys("Client")
 sleep 1
 
-types_list = session.find_element(:id, "types-list")
+types_list = session.find_element(:class_name, "types-list")
 types = types_list.find_elements(:css, "li:not([class~='hide'])")
 pp count = types.size # => 5
 
