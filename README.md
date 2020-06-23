@@ -11,6 +11,8 @@ Known working combinations are Selenium 2.48.2 and Firefox 34 (JSONWireProtocol)
 as well as Selenium 3.5.3, Firefox 55 and the now required Geckodriver 0.18.0
 (W3C Webdriver).
 
+See https://github.com/matthewmcgarvey/selenium.cr for an up-to-date library (as
+of June 2020) that implements the W3C Webdriver spec directly.
 
 ## Usage
 
